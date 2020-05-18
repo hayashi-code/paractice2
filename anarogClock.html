@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8">
+    <title>アナログ時計</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+
+    <style type="text/css">
+        .moziban {
+            position: relative;
+            height: 600px;
+            width: 600px;
+            border-radius: 100%;
+            border-color: lightGreen;
+            border-style: solid;
+            border-width: 8px;
+        }
+        
+        .moziban::after {
+            content: "";
+            background-color: black;
+            height: 10px;
+            width: 10px;
+            position: absolute;
+            top: calc(50% - 5px);
+            left: calc(50% - 5px);
+            border-radius: 50%;
+        }
+        
+        .memori {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .memori>div {
+            position: absolute;
+            top: 0;
+            left: calc(50% - 3px);
+            width: 6px;
+            height: 50%;
+            transform-origin: bottom;
+        }
+        
+        .memori>div::after {
+            position: absolute;
+            top: 0;
+            content: "";
+            width: 6px;
+            height: 15px;
+            background-color: lightGreen;
+        }
+        
+        .memori div:nth-child(1) {
+            transform: rotate(30deg);
+        }
+        
+        .memori div:nth-child(2) {
+            transform: rotate(60deg);
+        }
+        
+        .memori div:nth-child(3) {
+            transform: rotate(90deg);
+        }
+        
+        .memori div:nth-child(4) {
+            transform: rotate(120deg);
+        }
+        
+        .memori div:nth-child(5) {
+            transform: rotate(150deg);
+        }
+        
+        .memori div:nth-child(6) {
+            transform: rotate(180deg);
+        }
+        
+        .memori div:nth-child(7) {
+            transform: rotate(210deg);
+        }
+        
+        .memori div:nth-child(8) {
+            transform: rotate(240deg);
+        }
+        
+        .memori div:nth-child(9) {
+            transform: rotate(270deg);
+        }
+        
+        .memori div:nth-child(10) {
+            transform: rotate(300deg);
+        }
+        
+        .memori div:nth-child(11) {
+            transform: rotate(330deg);
+        }
+        
+        .memori div:nth-child(12) {
+            transform: rotate(360deg);
+        }
+        
+        .hand {
+            position: absolute;
+            bottom: 50%;
+            left: 50%;
+            background-color: silver;
+            transform-origin: 50% 100%;
+        }
+        
+        .hour.hand {
+            width: 6px;
+            height: 200px;
+            background-color: red;
+        }
+        
+        .minute.hand {
+            width: 4px;
+            height: 260px;
+            background-color: blue;
+        }
+        
+        .second.hand {
+            width: 3px;
+            height: 240px;
+            background-color: green;
+        }
+        
+        @media screen and (max-width:626px) {
+            .moziban {
+                border-color: cyan;
+                width: 300px;
+                height: 300px;
+            }
+            .hour.hand {
+                width: 6px;
+                height: 100px;
+                background-color: red;
+            }
+            .minute.hand {
+                width: 4px;
+                height: 130px;
+                background-color: blue;
+            }
+            .second.hand {
+                width: 3px;
+                height: 120px;
+                background-color: green;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="moziban">
+        <div class="memori">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+
+        <div class="hour hand"></div>
+        <div class="minute hand"></div>
+        <div class="second hand"></div>
+    </div>
+    <script>
+        const hour = document.querySelector(".hour.hand");
+        const minute = document.querySelector(".minute.hand");
+        const second = document.querySelector(".second.hand");
+
+        setInterval(() => {
+            const date = new Date();
+            const s = (360 / 60) * date.getSeconds();
+            const m = (360 / 60) * date.getMinutes() + (s / 60);
+            const h = (360 / 12) * date.getHours() + (m / 24);
+
+            second.style.transform = `rotate(${s}deg)`;
+            minute.style.transform = `rotate(${m}deg)`;
+            hour.style.transform = `rotate(${h}deg)`;
+        }, 1000);
+    </script>
+
+    <style type="text/css">
+        #time {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: Snow;
+            width: 30rem;
+            height: 5rem;
+            font-size: 1rem;
+            background-image: linear-gradient(to right, transparent, Black 10%, Green 30%, Green 70%, Black 90%, transparent);
+            margin: auto;
+            margin-top: 100px;
+        }
+    </style>
+
+    <body>
+
+        <head>
+            <meta charset="utf-8">
+            <title>時計</title>
+        </head>
+        <p><span id="time"></span></p>
+        <script type="text/javascript">
+            function tokei() {
+                const now = new Date();
+                const year = now.getFullYear();
+                const month = now.getMonth();
+                const date = now.getDate();
+                const days = now.getDay();
+                const hour = now.getHours();
+                const min = now.getMinutes();
+                const sec = now.getSeconds();
+                const msec = now.getMilliseconds();
+                let MyDay = ['SunDay', 'Monday', 'TuesDay', 'WednesDay', 'ThursDay', 'FriDay', 'SaturDay'];
+                const output = `${year}/${month + 1}/${date}  ${MyDay[days]}
+   ${hour}:${String(min).padStart(2,'0')} ${String(sec).padStart(2,'0')}sec
+   ${String(msec).padStart(3,'0')}`;
+                document.getElementById('time').textContent = output;
+            }
+
+            function refresh() {
+                setTimeout(recalc, 1);
+            }
+
+            function recalc() {
+                tokei();
+                refresh();
+            }
+            recalc();
+        </script>
+
+    </body>
+
+</html>
